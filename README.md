@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# Game-Price-Comparison-Reviews
+>>>>>>> 3db57fac0f9f467c870398f30ca0077f946a9232
