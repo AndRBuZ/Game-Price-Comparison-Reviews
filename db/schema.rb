@@ -10,8 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_26_181218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "game_marketplaces", force: :cascade do |t|
+    t.integer "price"
+    t.string "rating"
+    t.bigint "game_id", null: false
+    t.bigint "marketplace_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_marketplaces_on_game_id"
+    t.index ["marketplace_id"], name: "index_game_marketplaces_on_marketplace_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "developer"
+    t.string "publisher"
+    t.date "released_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "marketplaces", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "logo_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "game_marketplaces", "games"
+  add_foreign_key "game_marketplaces", "marketplaces"
 end
