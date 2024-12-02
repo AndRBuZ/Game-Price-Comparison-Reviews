@@ -1,0 +1,5 @@
+.games
+  h1 = 'Games'
+
+  - @games.each do |game|
+    = render partial: "games/game", locals: { game: game }
