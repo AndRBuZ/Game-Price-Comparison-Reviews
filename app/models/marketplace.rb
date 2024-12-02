@@ -3,5 +3,5 @@ class Marketplace < ApplicationRecord
   has_many :games, through: :game_marketplaces
 
   validates :name, presence: true
-  validates :url, presence: true, format: { with: /\Ahttps?:\/\/[\w\d\-.]+\.[a-z]+\z/i }
+  validates :url, presence: true, url: true
 end
