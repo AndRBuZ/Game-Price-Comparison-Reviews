@@ -20,8 +20,8 @@ RSpec.describe Game, type: :model do
   end
 
   describe 'Associations' do
-    it { should have_many(:game_marketplaces) }
+    it { should have_many(:game_marketplaces).dependent(:destroy) }
     it { should have_many(:marketplaces).through(:game_marketplaces) }
-    it { should have_and_belong_to_many(:games_genres).dependent(:destroy) }
+    it { should have_and_belong_to_many(:genres).dependent(:destroy) }
   end
 end
