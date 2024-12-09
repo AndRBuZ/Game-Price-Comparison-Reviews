@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_181218) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_03_123055) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "game_marketplaces", force: :cascade do |t|
-    t.integer "price"
+    t.integer "price", null: false
     t.string "rating"
     t.bigint "game_id", null: false
     t.bigint "marketplace_id", null: false
@@ -35,6 +35,21 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_181218) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "games_genres", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "genre_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_games_genres_on_game_id"
+    t.index ["genre_id"], name: "index_games_genres_on_genre_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "marketplaces", force: :cascade do |t|
     t.string "name", null: false
     t.string "url", null: false
@@ -45,4 +60,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_181218) do
 
   add_foreign_key "game_marketplaces", "games"
   add_foreign_key "game_marketplaces", "marketplaces"
+  add_foreign_key "games_genres", "games"
+  add_foreign_key "games_genres", "genres"
 end
