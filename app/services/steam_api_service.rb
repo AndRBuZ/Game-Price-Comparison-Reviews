@@ -10,79 +10,72 @@ class SteamApiService
     end
   end
 
+  # Fetches detailed game information and saves it to the database.
+  # The method retrieves the full game data, processes it, and delegates saving the data
+  # to the GameDataHandler service.
   def fetch_game_details
-    response = @connection.get("api/appdetails?appids=#{@game_id}")
-
-    handle_response(response) do |game_data|
-      game = save_game(process_data_for_game(game_data["data"]))
-      save_genres(process_data_for_genres(game_data["data"]), game)
-      save_game_marketplace(game, process_data_for_price(game_data["data"]))
+    marketplace = Marketplace.find_by(name: "Steam")
+    fetch_data do |data|
+      game_data = process_full_data(data["data"])
+      GameDataSaver.new(game_data, marketplace).process_and_save
     end
   end
 
-  def update_prices
-    response = @connection.get("api/appdetails?appids=#{@game_id}&filters=price_overview")
-
-    handle_response(response) do |price_data|
-      game_marketplace = GameMarketplace.find_or_initialize_by(steam_id: @game_id)
-      game_marketplace.update!(price: process_data_for_price(price_data["data"]))
+  # Updates the price of a game in the database
+  def update_price
+    fetch_data(filters: "price_overview") do |data|
+      price = process_price(data["data"])
+      game_marketplace = GameMarketplace.find_by(steam_id: @game_id)
+      game_marketplace.update!(price: price)
     end
   end
 
   private
 
-  def handle_response(response)
-    if response.success?
-      data = response.body["#{@game_id}"]
-      yield data if data.is_a?(Hash)
+  def fetch_data(filters: nil, &block)
+    params = { appids: @game_id }
+    params[:filters] = filters if filters
+
+    response = @connection.get("api/appdetails", params)
+    if response_successful?(response)
+      handle_response(response, &block)
     else
-      log_errors(response)
+      raise "Steam API Error: #{response.status} - #{response.body}"
     end
   end
 
-  def process_data_for_game(game_data)
+  def handle_response(response)
+    data = response.body[@game_id.to_s]
+    if data.is_a?(Hash)
+        yield data
+    else
+        raise "Unexpected data format: #{data.inspect}"
+    end
+  rescue => e
+    Rails.logger.error e.message
+    raise
+  end
+
+  def process_full_data(game_data)
     {
-      name: game_data["name"],
-      description: game_data["short_description"],
-      developer: game_data["developers"].first,
-      publisher: game_data["publishers"].first,
-      released_at: game_data["release_date"]["date"]
+      game: {
+        name: game_data["name"],
+        description: game_data["short_description"],
+        developer: game_data["developers"]&.first,
+        publisher: game_data["publishers"]&.first,
+        released_at: game_data["release_date"]["date"]
+      },
+      genres: game_data["genres"]&.map { |genre| genre["description"] } || [],
+      price: game_data.dig("price_overview", "final_formatted"),
+      steam_id: @game_id
     }
   end
 
-  def process_data_for_genres(game_data)
-    game_data["genres"].map { |genre| genre["description"] }
+  def process_price(price_data)
+    price_data.dig("price_overview", "final_formatted")
   end
 
-  def process_data_for_price(price_data)
-    price_data["price_overview"]["final_formatted"]
-  end
-
-  def save_game(game_data)
-    game = Game.find_or_initialize_by(name: game_data[:name])
-    game.update!(game_data)
-    game
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "Failed to save game: #{game_data[:name]} - #{e.message}"
-  end
-
-  def save_genres(genres, game)
-    genres.each do |genre_name|
-      genre = Genre.find_or_create_by(name: genre_name)
-      game.genres << genre unless game.genres.include?(genre)
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "Failed to save genre: #{genre_name} - #{e.message}"
-  end
-
-  def save_game_marketplace(game, price)
-    marketplace = Marketplace.find_by(name: "Steam")
-    game.game_marketplaces.create!(marketplace: marketplace, price: price, steam_id: @game_id)
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "Failed to save price: #{game.name} - #{e.message}"
-  end
-
-  def log_errors(response)
-    Rails.logger.error "Steam API Error: #{response.status} - #{response.body}"
+  def response_successful?(response)
+    response.body.dig("#{@game_id}", "success") == true
   end
 end
