@@ -4,5 +4,5 @@ class Game < ApplicationRecord
 
   has_and_belongs_to_many :genres, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end
