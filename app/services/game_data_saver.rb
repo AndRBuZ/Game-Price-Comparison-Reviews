@@ -42,7 +42,8 @@ class GameDataSaver
   end
 
   def save_game_marketplace(game)
-    game.game_marketplaces.create!(
+    game_marketplace = game.game_marketplaces.find_or_initialize_by(steam_id: @game_data[:steam_id])
+    game_marketplace.update!(
       marketplace: @marketplace,
       price: @game_data[:price],
       steam_id: @game_data[:steam_id]
