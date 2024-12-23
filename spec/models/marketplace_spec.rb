@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Marketplace, type: :model do
   describe 'Validations' do
+    subject { FactoryBot.build(:marketplace) }
+
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name) }
     it { should validate_presence_of(:url) }
