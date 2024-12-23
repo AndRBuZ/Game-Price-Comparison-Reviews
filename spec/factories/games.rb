@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :game do
-    name { "Test Game" }
+    sequence(:name) { |n| "game_#{n}" }
   end
 end
