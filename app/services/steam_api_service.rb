@@ -33,7 +33,7 @@ class SteamApiService
   private
 
   def fetch_data(filters: nil, &block)
-    params = { appids: @game_id }
+    params = { appids: @game_id, cc: "US", l: "english" }
     params[:filters] = filters if filters
 
     response = @connection.get("api/appdetails", params)
