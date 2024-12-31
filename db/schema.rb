@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_29_173744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "steam_id"
+    t.string "xbox_id"
     t.index ["game_id"], name: "index_game_marketplaces_on_game_id"
     t.index ["marketplace_id"], name: "index_game_marketplaces_on_marketplace_id"
   end
