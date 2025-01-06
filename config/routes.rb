@@ -12,5 +12,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "games#index"
 
+  get :signup, to: "users#new"
+  resources :users, only: :create
+
+  get :login, to: "sessions#new"
+  delete :logout, to: "sessions#destroy"
+  resources :sessions, only: :create
+
   resources :games
 end
