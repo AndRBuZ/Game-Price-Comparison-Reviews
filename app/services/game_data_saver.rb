@@ -15,16 +15,17 @@ class GameDataSaver
   private
 
   def save_game
-    game_attributes = {
-      name: @game_data[:game][:name],
+    game = Game.find_or_initialize_by(name: @game_data[:game][:name])
+
+    if game.new_record?
+    game.assign_attributes(
       description: @game_data[:game][:description],
       developer: @game_data[:game][:developer],
       publisher: @game_data[:game][:publisher],
       released_at: @game_data[:game][:released_at]
-    }
-
-    game = Game.find_or_initialize_by(name: game_attributes[:name])
-    game.update!(game_attributes)
+    )
+    game.save!
+    end
     game
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error "Failed to save game: #{e.message}"
@@ -42,11 +43,12 @@ class GameDataSaver
   end
 
   def save_game_marketplace(game)
-    game_marketplace = game.game_marketplaces.find_or_initialize_by(steam_id: @game_data[:steam_id])
+    marketplace_name_id = "#{@marketplace.name.downcase}_id".to_sym
+    game_marketplace = game.game_marketplaces.find_or_initialize_by(marketplace_name_id => @game_data[marketplace_name_id])
+
     game_marketplace.update!(
       marketplace: @marketplace,
-      price: @game_data[:price],
-      steam_id: @game_data[:steam_id]
+      price: @game_data[:price]
     )
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error "Failed to save game marketplace: #{e.message}"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_05_140141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,8 +22,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "steam_id"
+    t.string "xbox_id"
     t.index ["game_id"], name: "index_game_marketplaces_on_game_id"
     t.index ["marketplace_id"], name: "index_game_marketplaces_on_marketplace_id"
+    t.index ["steam_id", "xbox_id"], name: "index_game_marketplaces_on_steam_id_and_xbox_id", unique: true
   end
 
   create_table "games", force: :cascade do |t|
@@ -34,6 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
     t.date "released_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_games_on_name", unique: true
   end
 
   create_table "games_genres", force: :cascade do |t|
@@ -49,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
   create_table "marketplaces", force: :cascade do |t|
@@ -57,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_181245) do
     t.string "logo_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "url"], name: "index_marketplaces_on_name_and_url", unique: true
   end
 
   add_foreign_key "game_marketplaces", "games"

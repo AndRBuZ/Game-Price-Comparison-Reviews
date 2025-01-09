@@ -33,7 +33,9 @@ RSpec.describe GameDataSaver do
 
         expect(game.genres.pluck(:name)).to match_array(game_data[:genres])
 
-        game_marketplace = GameMarketplace.find_by(steam_id: game_data[:steam_id])
+        marketplace_id_key = "#{marketplace.name.downcase}_id".to_sym
+        game_marketplace = game.game_marketplaces.find_by(marketplace_id_key => game_data[marketplace_id_key])
+
         expect(game_marketplace).not_to be_nil
         expect(game_marketplace.price).to eq(game_data[:price])
         expect(game_marketplace.marketplace).to eq(marketplace)
@@ -60,10 +62,10 @@ RSpec.describe GameDataSaver do
       end
 
       context 'game marketplace saving fails' do
-        let(:game_data) { generate_game_data(steam_id: "invalid") }
+        let(:game_data) { generate_game_data(price: nil) }
 
         it 'raises and logs an error message' do
-          expect(Rails.logger).to receive(:error).with("Failed to save game marketplace: Validation failed: Steam is not a number")
+          expect(Rails.logger).to receive(:error).with("Failed to save game marketplace: Validation failed: Price can't be blank")
           expect { game_data_saver.process_and_save }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
@@ -73,7 +75,7 @@ RSpec.describe GameDataSaver do
       let!(:existing_game) do
         Game.create!(
           name: "Test Game",
-          description: "A test game with duplicate important data",
+          description: "A test game",
           developer: "Test Developer",
           publisher: "Test Publisher",
           released_at: "2023-01-01"

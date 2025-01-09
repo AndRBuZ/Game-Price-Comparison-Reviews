@@ -3,5 +3,6 @@ class GameMarketplace < ApplicationRecord
   belongs_to :marketplace
 
   validates :price, presence: true
-  validates :steam_id, uniqueness: true, numericality: { only_integer: true }
+  validates :steam_id, uniqueness: true
+  validates :xbox_id, uniqueness: true
 end
