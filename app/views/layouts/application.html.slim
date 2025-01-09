@@ -22,8 +22,12 @@ html
     = javascript_importmap_tags
   body
     = render "shared/navbar"
-    p.notice
-      = notice
-    p.alert
-      = alert
+    - if notice
+      p.notice
+        = notice
+
+    - if alert
+      p.alert
+        = alert
+
     = yield
