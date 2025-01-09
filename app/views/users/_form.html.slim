@@ -1,4 +1,6 @@
 = form_with model: @user, url: form_url, method: form_method, local: true do |form|
+  = turbo_frame_tag "signup_errors" do
+    = render "shared/errors", resource: @user
   .field
     = form.label :nickname
     = form.text_field :nickname
