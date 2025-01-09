@@ -1,0 +1,6 @@
+h2 Sign Up
+
+= turbo_frame_tag "signup_form" do
+  = render "form", user: @user, form_url: users_path, form_method: :post, button_text: "Sign Up"
+
+= link_to "Back", root_path, class: "back-link"

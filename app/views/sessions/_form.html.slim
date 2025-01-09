@@ -1,0 +1,9 @@
+= form_with url: form_url , method: form_method, local: true do |form|
+  .field
+    = form.label :email
+    = form.email_field :email
+  .field
+    = form.label :password
+    = form.password_field :password
+  .actions
+    = form.submit button_text

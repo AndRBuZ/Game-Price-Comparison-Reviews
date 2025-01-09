@@ -1,0 +1,17 @@
+.game-header
+  h1.game-name = @game.name
+
+.game-details
+  h3.game-description = @game.description
+  h3.game-release-date = "Release Date: #{@game.released_at}"
+  h3.game-developer = "Developer: #{@game.developer}"
+  h3.game-publisher = "Publisher: #{@game.publisher}"
+
+.game-genres
+  h3 Genres:
+  ul
+    - @game.genres.each do |genre|
+      li.game-genre = genre.name
+
+.game-price
+  p = "Price: #{@game.game_marketplaces.first.price}"

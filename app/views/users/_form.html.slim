@@ -1,0 +1,21 @@
+= form_with model: @user, url: form_url, method: form_method, local: true do |form|
+  = turbo_frame_tag "signup_errors" do
+    = render "shared/errors", resource: @user
+  .field
+    = form.label :nickname
+    = form.text_field :nickname
+
+  .field
+    = form.label :email
+    = form.email_field :email
+
+  .field
+    = form.label :password
+    = form.password_field :password
+
+  .field
+    = form.label :password_confirmation
+    = form.password_field :password_confirmation
+
+  .actions
+    = form.submit button_text

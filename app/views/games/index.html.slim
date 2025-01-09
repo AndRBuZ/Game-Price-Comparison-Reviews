@@ -1,5 +1,7 @@
 .games
   h1 = 'Games'
 
-  - @games.each do |game|
-    = render partial: "games/game", locals: { game: game }
+  .games-container
+    - @games.each do |game|
+      .game-item id="game-#{game.id}"
+        = render partial: "games/game", locals: { game: game }
