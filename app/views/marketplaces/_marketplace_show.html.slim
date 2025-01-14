@@ -1,0 +1,8 @@
+- if @marketplace.logo_url.present?
+  .mr-4
+    a href=@marketplace.url target="_blank"
+      img.max-h-20 src=@marketplace.logo_url alt="#{@marketplace.name} logo"
+.flex-1.flex.flex-col.items-center
+  h1.text-4xl.font-bold.mb-2.border-b-2.border-gray-300 = @marketplace.name
+  p.text-lg.mb-4
+    a.text-blue-500.hover:underline href=@marketplace.url target="_blank" = @marketplace.url

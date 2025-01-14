@@ -18,13 +18,13 @@ class GameDataSaver
     game = Game.find_or_initialize_by(name: @game_data[:game][:name])
 
     if game.new_record?
-    game.assign_attributes(
-      description: @game_data[:game][:description],
-      developer: @game_data[:game][:developer],
-      publisher: @game_data[:game][:publisher],
-      released_at: @game_data[:game][:released_at]
-    )
-    game.save!
+      game.assign_attributes(
+        description: @game_data[:game][:description],
+        developer: @game_data[:game][:developer],
+        publisher: @game_data[:game][:publisher],
+        released_at: @game_data[:game][:released_at]
+      )
+      game.save!
     end
     game
   rescue ActiveRecord::RecordInvalid => e

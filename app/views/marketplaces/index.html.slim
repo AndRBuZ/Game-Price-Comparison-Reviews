@@ -1,0 +1,5 @@
+h2.text-2xl.font-bold.mb-4 Marketplaces
+
+.marketplaces-container.grid.gap-4.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4
+  - @marketplaces.each do |marketplace|
+    = render "marketplace", marketplace: marketplace

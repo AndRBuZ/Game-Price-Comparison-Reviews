@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   resources :sessions, only: :create
 
   resources :games
+
+  resources :marketplaces, only: [ :index, :show ]
 end
