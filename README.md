@@ -48,7 +48,7 @@
   rails s -b 0.0.0.0
   rails tailwind:watch
   ```
-  You can also run the server with `foreman start -f Procfile.dev` to start the server and tailwind.
+  You can also run the server with `foreman start -f Procfile.dev` to start the server and tailwind. This will start the server at `http://localhost:5000`
 
 - **Architecture**
     - **Rails 8:** The application is built using the Ruby on Rails framework, which provides a robust structure for web development.
