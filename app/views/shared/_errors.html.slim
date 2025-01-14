@@ -1,4 +1,6 @@
 - if resource.errors.any?
   .error-messages
-    - resource.errors.full_messages.each do |message|
-      li = message
+    .bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.relative
+      ul.list-disc.ml-5
+        - resource.errors.full_messages.each do |message|
+          li = message

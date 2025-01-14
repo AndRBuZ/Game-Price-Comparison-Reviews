@@ -1,14 +1,20 @@
 nav.navbar
-  ul.nav-list
-    li.nav-item
-      = link_to "Home", root_path, class: "nav-link"
-
-  ul.nav-list.nav-auth
-    - if logged_in?
-      li.nav-item
-        = link_to "Logout", logout_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "nav-link"
-    - else
-      li.nav-item
-        = link_to "Login", login_path, class: "nav-link"
-      li.nav-item
-        = link_to "Signup", signup_path, class: "nav-link"
+  .bg-gray-800.p-4.flex.justify-between.items-center
+    .text-white.text-xl.font-bold
+      | AndRBuZ Games
+    ul.nav-list
+      .flex.space-x-4.text-lg
+        li.nav-item
+          = link_to "Home", root_path, class: "text-white hover:text-gray-300"
+        li.nav-item
+          = link_to "Marketplace", marketplaces_path, class: "text-white hover:text-gray-300"
+    ul.nav-list.nav-auth
+      .flex.space-x-4.text-lg
+        - if logged_in?
+          li.nav-item
+            = link_to "Logout", logout_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-white hover:text-gray-300"
+        - else
+          li.nav-item
+            = link_to "Login", login_path, class: "text-white hover:text-gray-300"
+          li.nav-item
+            = link_to "Signup", signup_path, class: "text-white hover:text-gray-300"

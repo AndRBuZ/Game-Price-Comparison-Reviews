@@ -1,3 +1,4 @@
-h2 Login
+h2.text-2xl.font-bold.mb-4.text-center Login
 
-= render partial: 'form', locals: { form_url: sessions_path, form_method: :post, button_text: "Login" }
+.login-container
+  = render partial: 'form', locals: { form_url: sessions_path, form_method: :post, button_text: "Login" }
