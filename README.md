@@ -18,21 +18,26 @@
   Currently, adding new games by using the `rails console` command. Use API Services to get the game details and add it to the database.
 
 - **How to run tests?**
-  To run tests inside the Docker container:
+  To run tests outside the Docker container:
   ```bash
   docker compose run --rm web RAILS_ENV=test rspec
   ```
 
+  To run tests inside the Docker container:
+  ```bash
+  RAILS_ENV=test rspec
+  ```
+
 - **Installation**
-  1. Build the Docker image:
+  1.Build the Docker image:
      ```bash
      docker compose build
      ```
-  2. Start the Docker containers:
+  2.Start the Docker containers:
      ```bash
      docker compose up
      ```
-  3. Inside the running `web` container, run the following commands:
+  3.Inside the running `web` container, run the following commands:
      ```bash
      bundle install
      rails db:migrate
