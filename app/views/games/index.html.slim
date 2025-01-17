@@ -1,8 +1,14 @@
 .games
   .container.mx-auto.p-4
     h1.text-2xl.font-bold.mb-4 = 'Games'
+    .flex.justify-end
+      = form_tag games_path, method: :get, id: "view-type-select", data: { turbo_frame: "games_view_type" } do
+        select#view-type name="view_type" onchange="this.form.requestSubmit()"
+          option(value="tile" selected=(@view_type == "tile")) Tile
+          option(value="list" selected=(@view_type == "list")) List
 
-    .grid.gap-4.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4
-      - @games.each do |game|
-        .game-item id="game-#{game.id}"
-          = render partial: "games/game", locals: { game: game }
+    = turbo_frame_tag 'games_view_type' do
+      - if @view_type == "tile"
+        = render partial: "games/game_tile_view", locals: { games: @games }
+      - else
+        = render partial: "games/game_list_view", locals: { games: @games }
