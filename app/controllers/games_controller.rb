@@ -6,11 +6,14 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
-  def show; end
+  def show
+    @reviews = @game.reviews.where.not(id: nil)
+    @review = @game.reviews.new
+  end
 
   private
 
   def set_game
-    @game = Game.find(params[:id])
+    @game = Game.includes(:reviews).find(params[:id])
   end
 end

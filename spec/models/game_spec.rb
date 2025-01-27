@@ -12,5 +12,6 @@ RSpec.describe Game, type: :model do
     it { should have_many(:game_marketplaces).dependent(:destroy) }
     it { should have_many(:marketplaces).through(:game_marketplaces) }
     it { should have_and_belong_to_many(:genres).dependent(:destroy) }
+    it { should have_many(:reviews).dependent(:destroy) }
   end
 end

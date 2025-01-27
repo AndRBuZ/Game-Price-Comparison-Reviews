@@ -1,3 +1,11 @@
 .game-show
   .container.mx-auto.p-4 id="game-#{@game.id}"
     = render "games/game_show"
+
+    h2 = "Reviews:"
+    = turbo_frame_tag "reviews" do
+      - if @reviews.present?
+        - @reviews.each do |review|
+          = render "reviews/review", review: review
+
+    = render "reviews/form", game: @game, review: @review, form_url: game_reviews_path(@game), form_method: :post

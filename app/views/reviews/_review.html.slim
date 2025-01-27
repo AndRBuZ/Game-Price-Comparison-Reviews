@@ -1,0 +1,9 @@
+.flex.flex-col.mb-4.bg-white.rounded-lg.shadow-md.p-4
+  .flex.items-center.justify-between
+    .flex.items-center
+      .text-sm.font-medium.text-gray-900
+        = review.user.nickname
+      .text-xs.font-light.text-gray-500.ml-2
+        = review.created_at.strftime("%b %d, %Y")
+    .text-sm.font-medium.text-gray-900
+      = review.body

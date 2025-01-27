@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   delete :logout, to: "sessions#destroy"
   resources :sessions, only: :create
 
-  resources :games
+  resources :games do
+    resources :reviews, shallow: true, only: [ :create ]
+  end
 
   resources :marketplaces, only: [ :index, :show ]
 end
