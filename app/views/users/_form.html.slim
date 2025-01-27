@@ -1,6 +1,5 @@
-= form_with model: @user, url: form_url, method: form_method, local: true, class: "space-y-4 max-w-md mx-auto p-6 border rounded shadow-md" do |form|
-  = turbo_frame_tag "signup_errors" do
-    = render "shared/errors", resource: @user
+= form_with model: @user, url: form_url, method: form_method, class: "space-y-4 max-w-md mx-auto p-6 border rounded shadow-md" do |form|
+  = render "shared/errors", resource: @user
   .field
     = form.label :nickname, class: "block font-medium text-gray-700 mb-1"
     .relative

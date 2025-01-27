@@ -8,10 +8,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_path, notice: "User created successfully"
     else
-      render turbo_stream: [
-      turbo_stream.replace("signup_errors", partial: "shared/errors", locals: { resource: @user }),
-      turbo_stream.replace("signup_form", partial: "users/form", locals: { user: @user, form_url: users_path, form_method: :post, button_text: "Sign Up" })
-    ]
+      render turbo_stream: turbo_stream.replace("errors", partial: "shared/errors", locals: { resource: @user })
     end
   end
 
