@@ -7,4 +7,12 @@ module FeatureHelpers
       click_on 'Login'
     end
   end
+
+  def log_out
+    accept_confirm do
+      click_on 'Logout'
+    end
+
+    expect(page).to have_content("Logged out successfully", wait: 5)
+  end
 end
