@@ -1,9 +1,12 @@
-.flex.flex-col.mb-4.bg-white.rounded-lg.shadow-md.p-4
-  .flex.items-center.justify-between
-    .flex.items-center
-      .text-sm.font-medium.text-gray-900
-        = review.user.nickname
-      .text-xs.font-light.text-gray-500.ml-2
-        = review.created_at.strftime("%b %d, %Y")
-    .text-sm.font-medium.text-gray-900
-      = review.body
+div id="review-#{review.id}"
+  .w-1/2.mx-auto.mb-4.bg-white.rounded-lg.shadow-md
+    .p-4
+      .flex.items-start.justify-between
+        .flex-1
+          .text-sm.font-medium.text-gray-900
+            = review.user.nickname
+          .text-xs.font-light.text-gray-500.mt-1
+            = review.created_at.strftime("%b %d, %Y")
+        .flex-1.text-right
+          .text-sm.font-medium.text-gray-900
+            = review.body

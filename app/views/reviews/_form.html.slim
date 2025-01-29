@@ -1,8 +1,10 @@
-= form_with model: [ game, review ], url: form_url, method: form_method, class: "space-y-6" do |form|
-  = render "shared/errors", resource: review
-  .field
-    = form.label :body, class: "block text-sm font-medium text-gray-700"
-    .mt-1
-      = form.text_area :body, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md", rows: 3
-  .actions
-    = form.submit "Submit", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+.w-1/2.mx-auto.mb-4.bg-white.rounded-lg.shadow-md
+  .p-4
+    = form_with model: [ game, review ], url: form_url, method: form_method, class: "space-y-6" do |form|
+      = render "shared/errors", resource: review
+      .field
+        = form.label :body, class: "block text-sm font-medium text-gray-700"
+        .mt-1
+          = form.text_area :body, placeholder: "Leave your review", class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md", rows: 3
+        .mt-2.flex.justify-end
+          = form.submit "Submit", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
