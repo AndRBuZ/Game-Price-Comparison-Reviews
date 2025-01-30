@@ -7,8 +7,9 @@ RSpec.describe Review, type: :model do
     subject { build(:review, user: user, game: game) }
 
     it { should validate_presence_of(:body) }
+
     it 'is valid with unique user_id and game_id combination' do
-      expect(existing_review).to be_valid
+      expect(subject).to be_valid
     end
 
     it 'is invalid with duplicate user_id and game_id combination' do

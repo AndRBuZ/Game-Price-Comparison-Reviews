@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :sessions, only: :create
 
   resources :games do
-    resources :reviews, shallow: true, only: [ :create ]
+    resources :reviews, shallow: true, only: [ :create, :destroy, :update, :edit ]
   end
 
   resources :marketplaces, only: [ :index, :show ]
