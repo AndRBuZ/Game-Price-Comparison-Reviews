@@ -14,6 +14,6 @@ class GamesController < ApplicationController
   private
 
   def set_game
-    @game = Game.includes(:reviews).find(params[:id])
+    @game = Game.find(params[:id])
   end
 end
