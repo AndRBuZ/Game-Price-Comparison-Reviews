@@ -14,6 +14,14 @@ module Authentication
   end
 
   def authenticate_user!
-    redirect_to login_path, alert: "You must be logged in to perform that action" unless logged_in?
+    unless logged_in?
+      respond_to do |format|
+        format.html { redirect_to login_path, alert: "You must be logged in" }
+        format.turbo_stream do
+          flash[:alert] = "You must be logged in"
+          render turbo_stream: turbo_stream.action(:redirect, login_path)
+        end
+      end
+    end
   end
 end
