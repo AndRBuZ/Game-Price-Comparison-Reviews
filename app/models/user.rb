@@ -7,4 +7,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: EMAIL_REGEX }
   validates :nickname, presence: true
+
+  def author_of?(object)
+    self.id == object.user_id
+  end
 end
