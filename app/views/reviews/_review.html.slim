@@ -11,7 +11,11 @@ turbo-frame id="review-#{review.id}"
           .text-sm.font-medium.text-gray-900
             = review.body
 
-      - if current_user&.id == review.user_id
+      .mt-2.flex.justify-end
+        .text-sm.font-medium.text-gray-900
+          = render  "shared/like", likeable: review
+
+      - if current_user&.author_of?(review)
         .flex.justify-end.mt-2
           .text-sm.font-medium.text-gray-900
             = link_to "Edit", edit_review_path(review), remote: true, class: "text-blue-500 hover:text-blue-700 mr-2"

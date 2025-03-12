@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: [ :create ]
+  include Liked
+
+  before_action :authenticate_user!
   before_action :set_game, only: [ :create ]
   before_action :set_review, only: [ :destroy, :update, :edit ]
 

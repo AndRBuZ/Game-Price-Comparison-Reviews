@@ -1,4 +1,8 @@
 class Review < ApplicationRecord
+  include Likeable
+
+  default_scope { order(created_at: :desc) }
+
   belongs_to :game
   belongs_to :user
 

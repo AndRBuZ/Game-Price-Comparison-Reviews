@@ -12,6 +12,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "games#index"
 
+  concern :likeable do
+    member do
+      post :like
+      post :dislike
+    end
+  end
+
   get :signup, to: "users#new"
   resources :users, only: :create
 
@@ -20,7 +27,7 @@ Rails.application.routes.draw do
   resources :sessions, only: :create
 
   resources :games do
-    resources :reviews, shallow: true, only: [ :create, :destroy, :update, :edit ]
+    resources :reviews, shallow: true, only: [ :create, :destroy, :update, :edit ], concerns: :likeable
   end
 
   resources :marketplaces, only: [ :index, :show ]
