@@ -11,4 +11,8 @@ class User < ApplicationRecord
   def author_of?(object)
     self.id == object.user_id
   end
+
+  def self.from_omniauth(access_token)
+    OauthAuthorization.new(access_token).call
+  end
 end
