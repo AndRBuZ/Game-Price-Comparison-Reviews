@@ -19,9 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "auth/:provider/callback", to: "sessions#create"
-
-  post "/auth/steam/callback", to: "sessions#steam"
+  match "/auth/:provider/callback", to: "sessions#omniauth_callback", via: [ :get, :post ]
 
   get :signup, to: "users#new"
   resources :users, only: :create
