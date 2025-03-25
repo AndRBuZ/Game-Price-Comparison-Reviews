@@ -39,6 +39,7 @@ end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include FeatureHelpers
+  config.include OmniAuthHelpers
 
   Capybara.register_driver :selenium_chrome_headless do |app|
     options = ::Selenium::WebDriver::Chrome::Options.new
